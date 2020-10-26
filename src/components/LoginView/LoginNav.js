@@ -32,8 +32,8 @@ function HideTabBar() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Root">
-        <Stack.Screen name="Sign Up" component={SignUp} />
-        <Stack.Screen name="Log In" component={LogIn} />
+        {/* <Stack.Screen name="Sign Up" component={SignUp} /> */}
+        {/* <Stack.Screen name="Log In" component={LogIn} /> */}
         <Stack.Screen name="Track Chat" component={Root} />
       </Stack.Navigator>
     </NavigationContainer>
