@@ -19,8 +19,8 @@ function Root() {
   return (
 
       <Tab.Navigator>
-        <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Create Group" component={CreatGroup} />
+        <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Chat Window" component={Chat} />
       </Tab.Navigator>
   );
