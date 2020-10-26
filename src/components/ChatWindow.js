@@ -24,7 +24,7 @@ import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const socket = socketIO('https://trackchat.herokuapp.com');
-// const socket = socketIO('http://localhost:3000')
+// const socket = socketIO('http://localhost:3000');
 
 function sosAlert() {
   Alert.alert('SEND SOS');

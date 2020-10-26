@@ -42,8 +42,9 @@ function SignUp(props) {
       const response = await axios({
         method: 'post',
         url: 'https://trackchat.herokuapp.com/signup',
+        // url: 'http://localhost:3000/signup',
         data: data,
-      })
+      });
       if (response.data === 'used name') {
         console.log('used name, try another');
       }

@@ -15,6 +15,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import axios from "axios";
 import Loading from '../components/Loading';
 import ChatWindows from './ChatWindow';
+import SearchBar from './SearchBar';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,7 +45,8 @@ const GroupChat = () => {
   useEffect(() => {
       async function allUsers() {
         await axios
-          .get("https://trackchat.herokuapp.com/getusers")
+          .get('https://trackchat.herokuapp.com/getusers')
+          // .get('http://localhost:3000/getusers')
           .then((users) => {
             setUsers(users.data);
             console.log(users);
@@ -70,6 +72,7 @@ const GroupChat = () => {
     !users ? <Loading /> :
     <>
       <SafeAreaView style={styles.container}>
+    <SearchBar />
         <View style={styles.linearGradient}>
           <FlatList
             data={users}
@@ -111,8 +114,8 @@ const styles = StyleSheet.create({
 function sideDrawer() {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name='Chat Window' component={ChatWindows} />
       <Drawer.Screen name='Find Users' component={GroupChat} />
+      <Drawer.Screen name='Chat Window' component={ChatWindows} />
     </Drawer.Navigator>
   );
 }

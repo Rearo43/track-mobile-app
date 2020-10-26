@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import MapView, { Marker, AnimatedRegion } from "react-native-maps";
+import React, { useCallback, useEffect, useState } from 'react';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import {
   Alert,
   Dimensions,
@@ -11,12 +11,12 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
-import socketIO from "socket.io-client";
-import { connect } from "react-redux";
-import { location } from "../store/login";
+} from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import socketIO from 'socket.io-client';
+import { connect } from 'react-redux';
+import { location } from '../store/login';
 
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
@@ -26,14 +26,15 @@ import { location } from "../store/login";
 
 // const Tab = createBottomTabNavigator();
 
-import Loading from "../components/Loading.js";
+import Loading from '../components/Loading.js';
 
 const socket = socketIO("https://trackchat.herokuapp.com");
+// const socket = socketIO('http://localhost:3000');
 
 const Map = (props) => {
   const [locationPermissions, setLocationPermissions] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [locationResult, setLocationResult] = useState("");
+  const [locationResult, setLocationResult] = useState('');
   const [currentLocations, setCurrentLocations] = useState({});
   const [sosLocation, setSosLocation] = useState(null);
 
@@ -42,8 +43,8 @@ const Map = (props) => {
 
   const grantLocationPermissions = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== "granted") {
-      setCurrentLocations("Permission to access location was denied");
+    if (status !== 'granted') {
+      setCurrentLocations('Permission to access location was denied');
     } else {
       setLocationPermissions(true);
       getStartingPosition();
@@ -53,8 +54,8 @@ const Map = (props) => {
   const grabLocation = (latitude, longitude) => {
     props.location({ latitude, longitude });
     // console.log(user, 'user')
-    socket.emit("locationBroadcast", {
-      user: props.loggedIn ? props.username : "user",
+    socket.emit('locationBroadcast', {
+      user: props.loggedIn ? props.username : 'user',
       latitude,
       longitude,
       color: props.color,
@@ -67,13 +68,13 @@ const Map = (props) => {
   }, []);
 
   useEffect(() => {
-    socket.emit("join", { username: props.username || "user" });
-    socket.on("location", (location) => {
+    socket.emit('join', { username: props.username || 'user' });
+    socket.on('location', (location) => {
       // console.log('location of a user:', location);
       // this is where we set everyones position
       addUsersToMap(location);
     });
-    socket.on("sos", (alert) => {
+    socket.on('sos', (alert) => {
       setSosLocation({
         latitude: alert.location.latitude,
         longitude: alert.location.longitude,
@@ -101,11 +102,14 @@ const Map = (props) => {
   };
 
   const repeatingLocations = () => {
-    setInterval(async () => {
-      // console.log("in interval");
-      let location = await Location.getCurrentPositionAsync({});
-      grabLocation(location.coords.latitude, location.coords.longitude);
-    }, 3000);
+    // setInterval(async () => {
+    //   // console.log("in interval");
+    //   let location = await Location.getCurrentPositionAsync({});
+    //   grabLocation(location.coords.latitude, location.coords.longitude);
+    // }, 3000);
+
+    let location = Location.getCurrentPositionAsync({});
+    grabLocation(location.coords.latitude, location.coords.longitude);
   };
 
   useEffect(() => {
@@ -151,7 +155,7 @@ const Map = (props) => {
                   longitude: sosLocation.longitude,
                 }}
                 key={sosLocation.user}
-                pinColor="red"
+                pinColor='red'
                 title={sosLocation.user}
               />
             )}
@@ -185,12 +189,12 @@ const Map = (props) => {
 // STYLING
 
 const getRandomColor = () => {
-  let hexcode = "#" + Math.random().toString(16).slice(2, 8);
+  let hexcode = '#' + Math.random().toString(16).slice(2, 8);
   return hexcode;
 };
 
 let pinColor = getRandomColor();
-let { height, width } = Dimensions.get("window");
+let { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -205,7 +209,7 @@ const styles = StyleSheet.create({
   },
   sos: {
     marginTop: 65,
-    marginHorizontal: "5%",
+    marginHorizontal: '5%',
   },
 });
 
@@ -230,7 +234,7 @@ function MapScreen(props) {
         style={styles.sos}
         onPress={() => sosAlert()}
       /> */}
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>CURRENTLY ON "MAP SCREEN"</Text>
         <Map
           username={props.username}

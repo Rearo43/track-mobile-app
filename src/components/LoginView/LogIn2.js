@@ -22,6 +22,7 @@ function LogIn(props) {
     try {
       const authHeader = 'Basic ' + base64.encode(`${data.username}:${data.password}`);
       const response = await axios.post(
+        // 'http: //localhost:3000/signup',
         'https://trackchat.herokuapp.com/signin',
         {},
         {
