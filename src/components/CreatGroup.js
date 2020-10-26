@@ -10,11 +10,20 @@ import {
   Button,
   Alert,
 } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import axios from "axios";
-import Loading from '../components/Loading'
+import Loading from '../components/Loading';
+import ChatWindows from './ChatWindow';
 
-const Add = () => {
-  Alert.alert("Added to Group");
+const Drawer = createDrawerNavigator();
+
+const Add = (event) => {
+  const grouping = [];
+  grouping.push(event);
+  Alert.alert(event, "Added to Group");
+
+  console.log('GROUPING', grouping);
 };
 
 const Item = ({ item, style }) => (
@@ -22,7 +31,7 @@ const Item = ({ item, style }) => (
     <View>
       <TouchableOpacity style={[styles.item, style]}>
         <Text style={styles.title}>{item}</Text>
-        <Button title={"Add to Group"} onPress={Add} />
+        <Button title={"Add to Group"} onPress={() => Add(item)} />
       </TouchableOpacity>
     </View>
   </View>
@@ -51,7 +60,7 @@ const GroupChat = () => {
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        // onPress={() => setSelectedId(item.id)}
         style={{ backgroundColor }}
       />
     );
@@ -99,4 +108,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GroupChat;
+function sideDrawer() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name='Chat Window' component={ChatWindows} />
+      <Drawer.Screen name='Find Users' component={GroupChat} />
+    </Drawer.Navigator>
+  );
+}
+
+export default sideDrawer;
