@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Form,
@@ -14,20 +14,20 @@ import {
   TextInput,
   ScrollView,
   Alert,
-  KeyboardAvoidingView
-} from "react-native";
-import * as Permissions from "expo-permissions";
-import SignUp from "./LoginView/SignUp.js";
-import { useForm, Controller } from "react-hook-form";
-import socketIO from "socket.io-client";
-import { connect } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+  KeyboardAvoidingView,
+} from 'react-native';
+import * as Permissions from 'expo-permissions';
+import SignUp from './LoginView/SignUp.js';
+import { useForm, Controller } from 'react-hook-form';
+import socketIO from 'socket.io-client';
+import { connect } from 'react-redux';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const socket = socketIO("https://trackchat.herokuapp.com");
+const socket = socketIO('https://trackchat.herokuapp.com');
 // const socket = socketIO('http://localhost:3000')
 
 function sosAlert() {
-  Alert.alert("SEND SOS");
+  Alert.alert('SEND SOS');
 }
 
 function Chat(props) {
@@ -39,49 +39,57 @@ function Chat(props) {
 
   const onSubmit = (chat) => {
     // console.log('Username:', props.username)
-    console.log("Chat:", chat);
-    socket.emit("chatBroadcast", {
+    console.log('Chat:', chat);
+    socket.emit('chatBroadcast', {
       username: props.username,
       message: chat.chat,
     });
-    console.log("chat", chat);
+    console.log('chat', chat);
   };
 
   const handleSOS = (sos) => {
-    console.log("SOS");
-    socket.emit("sosBroadcast", {
+    console.log('SOS');
+    socket.emit('sosBroadcast', {
       username: props.username,
       location: { latitude: props.latitude, longitude: props.longitude },
-      message: "sos",
+      message: 'sos',
     });
   };
 
   const handleChat = (chat) => {
     console.log('CHAT');
-  }
+  };
 
   const onError = (errors) => {
-    console.log("Errors:", errors);
+    console.log('Errors:', errors);
   };
 
   useEffect(() => {
-    socket.on("sos", (alert) => {
-      (Alert.alert(alert.username, `Needs help! \n Located at: \n ${alert.location.latitude}, ${alert.location.longitude}`));
+    socket.on('sos', (alert) => {
+      Alert.alert(
+        alert.username,
+        `Needs help! \n Located at: \n ${alert.location.latitude}, ${alert.location.longitude}`
+      );
       console.log(`${alert.username} needs help!`);
     });
   }, []);
 
   useEffect(() => {
-    socket.on("chat", (chat) => {
+    socket.on('chat', (chat) => {
       // addChatToWindow(chat);
-      console.log("chats from use effect", chats);
+      console.log('chats from use effect', chats);
       setChats((chats) => [...chats, chat]);
     });
   }, []);
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#181818',
+      }}
       behavior='padding'
     >
       <ScrollView style={styles.chat}>
@@ -137,76 +145,94 @@ function Chat(props) {
   );
 }
 
-let { height, width } = Dimensions.get("window");
+let { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   footer: {
     height: 300,
-    backgroundColor: "#f5f5f5",
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "stretch",
+    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
   },
-  chat:{
+  chat: {
     marginTop: 130,
     marginBottom: 20,
-    backgroundColor: "#d8e4f0",
+    backgroundColor: '#3a3a3a',
     paddingRight: 20,
     paddingLeft: 20,
-    borderColor: "#6d6f70",
+    // borderColor: '#6d6f70',
     width: width - 50,
-    height: height -200,
-
+    height: height - 200,
+    shadowColor: 'white',
+    shadowOffset: {
+      width: width - 50,
+      height: height - 200,
+    },
+    // shadowOpacity: 0.64,
+    // shadowRadius: 5.79,
   },
-  chatText:{
-    fontWeight: "300",
+  chatText: {
+    fontWeight: '300',
     fontFamily: 'Helvetica Neue',
     padding: 7,
-    textAlign: 'justify'
-    
+    textAlign: 'justify',
   },
   input: {
     height: 50,
     width: width - 50,
     padding: 5,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: "#48BBEC",
+    borderColor: '#48BBEC',
   },
   buttonText: {
     fontSize: 14,
-    color: "white",
-    alignSelf: "center",
-    fontFamily: 'Helvetica Neue'
+    color: 'white',
+    alignSelf: 'center',
+    fontFamily: 'Helvetica Neue',
   },
   button: {
     height: 36,
-    backgroundColor: "#48BBEC",
-    borderColor: "#48BBEC",
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 10,
     width: 100,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   sosbutton: {
     height: 36,
-    backgroundColor: "#ff0000",
-    borderColor: "#48BBEC",
+    backgroundColor: '#ff0000',
+    borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 10,
     width: 100,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   errors: {
-    color: "red",
+    color: 'red',
     marginTop: 2,
     marginBottom: 8,
-    textAlign: "center",
+    textAlign: 'center',
+  },
+  linearGradient: {
+    shadowColor: 'black',
+    shadowOffset: {
+      width: -5,
+      height: -7,
+    },
+    shadowOpacity: 0.64,
+    shadowRadius: 5.79,
+  },
+  card: {
+    backgroundColor: '#3a3a3a',
+    marginBottom: 25,
   },
 });
 

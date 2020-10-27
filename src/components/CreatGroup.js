@@ -74,21 +74,18 @@ const GroupChat = () => {
     //   setUsers(users)
     //   console.log('BLANK SEARCH', users);
     // } else {
-      setUsers(filterUsers(names, query));
-      // console.log('NOT BLANK SEARCH', users);
-      // setUsers(users);
+    setUsers(filterUsers(names, query));
+    // console.log('NOT BLANK SEARCH', users);
+    // setUsers(users);
     // }
-
   }
 
   const renderItem = ({ item }) => {
-    const backgroundColor = 'white';
-
     return (
       <Item
         item={item}
         // onPress={() => setSelectedId(item.id)}
-        style={{ backgroundColor }}
+        style={styles.card}
       />
     );
   };
@@ -121,6 +118,7 @@ const GroupChat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#181818',
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
@@ -132,21 +130,31 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   linearGradient: {
-    shadowColor: '#000',
+    shadowColor: 'black',
     shadowOffset: {
-      width: 0,
-      height: 6,
+      width: -5,
+      height: -7,
     },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-
-    elevation: 12,
+    shadowOpacity: 0.64,
+    shadowRadius: 5.79,
+  },
+  card: {
+    backgroundColor: '#3a3a3a',
+    marginBottom: 25,
   },
 });
 
 function sideDrawer() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerStyle={{
+        backgroundColor: '#3a3a3a',
+        width: 180,
+      }}
+      drawerType={'front'}
+      overlayColor='1'
+      lazy='false'
+    >
       <Drawer.Screen name='Find Users' component={GroupChat} />
       <Drawer.Screen name='Chat Window' component={ChatWindows} />
     </Drawer.Navigator>
