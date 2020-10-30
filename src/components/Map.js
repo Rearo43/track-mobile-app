@@ -28,6 +28,7 @@ import { location } from '../store/login';
 
 import Loading from '../components/Loading.js';
 
+// const socket = socketIO('https://track-app-mobile.herokuapp.com');
 const socket = socketIO("https://trackchat.herokuapp.com");
 // const socket = socketIO('http://localhost:3000');
 

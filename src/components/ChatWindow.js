@@ -23,6 +23,7 @@ import socketIO from 'socket.io-client';
 import { connect } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+// const socket = socketIO('https://track-app-mobile.herokuapp.com');
 const socket = socketIO('https://trackchat.herokuapp.com');
 // const socket = socketIO('http://localhost:3000');
 
